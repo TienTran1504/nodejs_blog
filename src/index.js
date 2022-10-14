@@ -6,6 +6,8 @@ const { engine } = require("express-handlebars");
 const app = express();
 const port = 3000;
 
+const route = require('./routes');
+
 app.use(express.static(path.join(__dirname,'public'))); // xử lý file tĩnh
 
 app.use(express.urlencoded({
@@ -23,27 +25,8 @@ app.engine('hbs',handlebars.engine({
 app.set('view engine','hbs');
 app.set('views', path.join(__dirname,'resources/views'));
 
-// console.log('PATH: ', path.join(__dirname,'resources/views'))
-app.get('/', (req, res) => {
-  res.render('home');
-})
-
-app.get('/news', (req, res) => {
-  res.render('news');
-})
-
-app.get('/search', (req, res) => {
-  // console.log(req.query.q);
-  res.render('search');
-})
-
-app.post('/search', (req, res) => {
-  console.log(req.body); 
-  // res.render('search');
-  res.send('');
-})
-
-
+//Routes init
+route(app);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
